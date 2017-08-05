@@ -1,0 +1,14 @@
+{
+	"name": "phi-model",
+	"description": "Phi model",
+	"autoload": {
+		"psr-4": {
+			"Phi\\Model\\": "source/class"
+		},
+		"files": [
+
+		]
+	}
+}
+
+
