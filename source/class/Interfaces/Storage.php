@@ -6,5 +6,5 @@ use Phi\Model\Entity;
 
 interface Storage
 {
-    public function store(Entity $entity);
+    public function store(Entity $entity, $dryRun = false);
 }

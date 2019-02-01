@@ -2,8 +2,6 @@
 
 namespace Phi\Model;
 
-use ImGrowth\Entity\Node;
-use ImGrowth\Repository\NodeRecord;
 use Phi\Database\Source;
 use Phi\Model\Interfaces\Storage;
 
@@ -17,7 +15,14 @@ abstract class Repository  implements Storage
     protected static $tableName = null;
 
 
-    public abstract function store(Entity $entity);
+    public abstract function store(Entity $entity, $dryRun =false);
+
+
+    public static function getTableName()
+    {
+        return static::$tableName;
+    }
+
 
     public function __construct(Source $database)
     {
@@ -29,9 +34,10 @@ abstract class Repository  implements Storage
         return $this->database;
     }
 
-    public static function getTableName()
+
+    public function query($query, $parameters = null)
     {
-        return static::$tableName;
+        return $this->database->query($query, $parameters);
     }
 
     public function queryAndFetch($query, $parameters = null)
@@ -58,6 +64,105 @@ abstract class Repository  implements Storage
     {
         return $this->database->escape($value, $type);
     }
+
+
+
+    public function getAll($extraQuery = '', $indexBy = null)
+    {
+        $rows = $this->queryAndFetch('SELECT * FROM '.$this->getTableName().' '.$extraQuery);
+        $dataset = $this->getDataset($rows);
+
+        if($indexBy) {
+            $indexedArray = array();
+            foreach ($dataset as $instance) {
+                $indexedArray[$instance->getValue($indexBy)] = $instance;
+            }
+            return $indexedArray;
+        }
+        else {
+            return $dataset;
+        }
+
+
+
+    }
+
+
+
+
+    /**
+     * @return \Phi\Model\Entity
+     */
+    public function getEntityInstance($cast = null)
+    {
+        if(!$cast) {
+            $entityClassName = str_replace('\Repository\\', '\Entity\\', get_class($this));
+        }
+        else {
+            $entityClassName = $cast;
+        }
+
+        $instance = new $entityClassName($this);
+        return $instance;
+    }
+
+    public function getDataset($rows, $cast = null, $valueFilter = null)
+    {
+
+        $dataset = [];
+        foreach ($rows as $values) {
+            $instance = $this->getEntityInstance($cast);
+
+            if($valueFilter) {
+                foreach ($values as $key => $value) {
+                    if(strpos($key, $valueFilter) === 0) {
+                        $field = preg_replace('`^'.$valueFilter.'`', '', $key);
+                        $instance->setValue($field, $value);
+                    }
+                }
+            }
+            else {
+                $instance->setValues($values);
+            }
+
+
+            $dataset[] = $instance;
+        }
+
+
+        return new \Planck\Model\Dataset($dataset, $this);
+    }
+
+
+
+
+
+
+
+
+    public function reset()
+    {
+        $this->database->query("DROP TABLE ".$this->getTableName()."");
+        $this->initialize();
+        return $this;
+    }
+
+
+
+    public function drop()
+    {
+        $this->database->query("DROP TABLE ".$this->getTableName()."");
+        return $this;
+    }
+
+    public function flush()
+    {
+        $this->database->query("DELETE FROM TABLE ".$this->getTableName()."");
+        return $this;
+    }
+
+
+
 
 
 }
