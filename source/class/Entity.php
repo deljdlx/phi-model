@@ -61,6 +61,16 @@ class Entity implements \JsonSerializable
         return json_encode($this);
     }
 
+    public function bindWithEntity(Entity $entity)
+    {
+        foreach ($entity as $attribute => &$value) {
+            $this->$attribute = &$value;
+        }
+
+        return $this;
+
+    }
+
 
     /**
      * @param $key
