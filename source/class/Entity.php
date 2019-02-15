@@ -144,9 +144,22 @@ class Entity implements \JsonSerializable
         return $this;
     }
 
-    public function getValues()
+    /**
+     * @param array|null $selectedFields
+     * @return array
+     */
+    public function getValues(array $selectedFields = null)
     {
-        return $this->values;
+        if(empty($selectedFields)) {
+            return $this->values;
+        }
+        else {
+            $values = [];
+            foreach ($selectedFields as $field) {
+                $values[$field] = $this->getValue($field);
+            }
+            return $values;
+        }
     }
 
 

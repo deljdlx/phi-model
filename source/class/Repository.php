@@ -65,6 +65,11 @@ abstract class Repository  implements Storage
         return $this->database->escape($value, $type);
     }
 
+    public function escapeField($value, $type = null)
+    {
+        return $this->database->escapeField($value, $type);
+    }
+
 
 
     public function getAll($extraQuery = '', $indexBy = null)
