@@ -172,19 +172,15 @@ class Entity implements \JsonSerializable
         $this->repository = $repository;
         return $this;
     }
-
     /**
      * @return Repository
      */
     public function getRepository($className = null)
     {
-        if($className === null) {
-            return $this->repository;
-        }
-        else {
-            return $this->getApplication()->getModel()->getRepository($className);
-        }
+        return $this->repository;
     }
+
+
 
 
     /**
