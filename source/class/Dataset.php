@@ -18,8 +18,23 @@ class Dataset implements \Iterator, \ArrayAccess, \JsonSerializable, \Countable
     {
         $this->repository = $repository;
         $this->setValues($values);
-
     }
+
+
+    /**
+     * @param Dataset $dataset
+     * @return $this
+     */
+    public function loadFromDataset(Dataset $dataset)
+    {
+        $this->repository = $dataset->getRepository();
+        $this->setValues(
+           $dataset->getValues()
+        );
+
+        return $this;
+    }
+
 
     public function first()
     {
