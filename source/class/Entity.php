@@ -85,8 +85,8 @@ class Entity implements \JsonSerializable
     public function isFieldUpdated($fieldName)
     {
 
-
-        if($value = $this->getValue($fieldName)) {
+        $value = $this->getValue($fieldName);
+        if($value !== null) {
             if(array_key_exists($fieldName, $this->oldValues)) {
 
                 if($this->oldValues[$fieldName] == $value) {
