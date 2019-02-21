@@ -206,12 +206,12 @@ class Entity implements \JsonSerializable
 
     public function doBeforeInsert()
     {
-        return $this;
+        return true;
     }
 
     public function doBeforeUpdate()
     {
-        return $this;
+        return true;
     }
 
     public function doAfterSerialize($data)
