@@ -56,6 +56,17 @@ class Entity implements \JsonSerializable
         return $this->doAfterSerialize($data);
     }
 
+    public function jsonUnserialize($json)
+    {
+        $data = json_decode($json, true);
+        $data = $this->doBeforeJsonUnserialize($data);
+        $this->setValues($data);
+        return $this;
+
+    }
+
+
+
     public function toJson()
     {
         return json_encode($this);
@@ -218,6 +229,13 @@ class Entity implements \JsonSerializable
     {
         return $data;
     }
+
+    public function doBeforeJsonUnserialize($data)
+    {
+        return $data;
+    }
+
+
 
 
 
