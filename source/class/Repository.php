@@ -12,7 +12,7 @@ abstract class Repository  implements Storage
     /**
      * @var Source
      */
-    protected $database;
+    protected $source;
     protected static $tableName = null;
 
 
@@ -25,50 +25,55 @@ abstract class Repository  implements Storage
     }
 
 
-    public function __construct(Source $database)
+    public function __construct(Source $source)
     {
-        $this->database = $database;
+        $this->source = $source;
     }
 
     public function getSource()
     {
-        return $this->database;
+        return $this->source;
+    }
+
+    public function setSource(Source $source)
+    {
+        $this->source = $source;
     }
 
 
     public function query($query, $parameters = null)
     {
-        return $this->database->query($query, $parameters);
+        return $this->source->query($query, $parameters);
     }
 
     public function queryAndFetch($query, $parameters = null)
     {
-        return $this->database->queryAndFetch($query, $parameters);
+        return $this->source->queryAndFetch($query, $parameters);
     }
 
     public function queryAndFetchOne($query, $parameters = null)
     {
-        return $this->database->queryAndFetchOne($query, $parameters);
+        return $this->source->queryAndFetchOne($query, $parameters);
     }
 
     public function queryAndFetchValue($query, $parameters = null)
     {
-        return $this->database->queryAndFetchValue($query, $parameters);
+        return $this->source->queryAndFetchValue($query, $parameters);
     }
 
     public function getLastInsertId($name = null)
     {
-        return $this->database->getLastInsertId($name);
+        return $this->source->getLastInsertId($name);
     }
 
     public function escape($value, $type = null)
     {
-        return $this->database->escape($value, $type);
+        return $this->source->escape($value, $type);
     }
 
     public function escapeField($value, $type = null)
     {
-        return $this->database->escapeField($value, $type);
+        return $this->source->escapeField($value, $type);
     }
 
 
@@ -96,7 +101,7 @@ abstract class Repository  implements Storage
      */
     public function getTableDescriptor()
     {
-        return $this->database->getDescriptor($this->getTableName());
+        return $this->source->getDescriptor($this->getTableName());
     }
 
 
@@ -157,7 +162,7 @@ abstract class Repository  implements Storage
 
     public function reset()
     {
-        $this->database->query("DROP TABLE ".$this->getTableName()."");
+        $this->source->query("DROP TABLE ".$this->getTableName()."");
         $this->initialize();
         return $this;
     }
@@ -166,13 +171,13 @@ abstract class Repository  implements Storage
 
     public function drop()
     {
-        $this->database->query("DROP TABLE ".$this->getTableName()."");
+        $this->source->query("DROP TABLE ".$this->getTableName()."");
         return $this;
     }
 
     public function flush()
     {
-        $this->database->query("DELETE FROM TABLE ".$this->getTableName()."");
+        $this->source->query("DELETE FROM TABLE ".$this->getTableName()."");
         return $this;
     }
 
