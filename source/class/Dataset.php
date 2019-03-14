@@ -36,6 +36,9 @@ class Dataset implements \Iterator, \ArrayAccess, \JsonSerializable, \Countable
     }
 
 
+    /**
+     * @return Entity|null
+     */
     public function first()
     {
         if($this->offsetExists(0)) {
