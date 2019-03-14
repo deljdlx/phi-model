@@ -46,6 +46,12 @@ abstract class Repository  implements Storage
         return $this->source->query($query, $parameters);
     }
 
+    public function getCompiledQuery($query, $parameters = null)
+    {
+        return $this->source->getCompiledQuery($query, $parameters);
+    }
+
+
     public function queryAndFetch($query, $parameters = null)
     {
         return $this->source->queryAndFetch($query, $parameters);

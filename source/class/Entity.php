@@ -211,7 +211,7 @@ class Entity implements \JsonSerializable
 
     public function store($dryRun = false)
     {
-        $this->repository->store($this, $dryRun);
+        $this->getRepository()->store($this, $dryRun);
         return $this;
     }
 
