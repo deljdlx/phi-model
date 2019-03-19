@@ -107,6 +107,7 @@ abstract class Repository  implements Storage
      */
     public function getTableDescriptor()
     {
+
         return $this->source->getDescriptor($this->getTableName());
     }
 
