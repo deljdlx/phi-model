@@ -1,6 +1,21 @@
 {
-	"name": "phi-model",
+	"name": "elbiniou/phi-model",
 	"description": "Phi model",
+
+
+	"repositories": [
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-database"},
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-core"},
+		{"type": "vcs", "url": "https://github.com/elbiniou/phi-traits"}
+	],
+	"require":
+	{
+		"elbiniou/phi-core": "0.1.0",
+		"elbiniou/phi-database": "0.1.0",
+		"elbiniou/phi-traits": "0.1.0"
+	},
+
+
 	"autoload": {
 		"psr-4": {
 			"Phi\\Model\\": "source/class"

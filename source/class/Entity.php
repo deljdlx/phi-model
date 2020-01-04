@@ -1,9 +1,9 @@
 <?php
 namespace Phi\Model;
 
-
-use Phi\Model\Interfaces\Storage;
 use Phi\Traits\Introspectable;
+use Phi\Model\Interfaces\Storage;
+
 
 class Entity implements \JsonSerializable
 {
@@ -90,7 +90,23 @@ class Entity implements \JsonSerializable
      */
     public function setValue($key, $value) {
         $this->values[$key]=$value;
+
         return $this;
+    }
+
+
+    public function getUpdatedValues()
+    {
+        $values = $this->getValues();
+        $updatedFields = [];
+        foreach ($values as $key => $value) {
+            if($this->isFieldUpdated($key)) {
+                $updatedFields[$key] = $value;
+            }
+        }
+
+        return $updatedFields;
+
     }
 
     public function isFieldUpdated($fieldName)
