@@ -1,18 +1,18 @@
 {
-	"name": "elbiniou/phi-model",
+	"name": "deljlx/phi-model",
 	"description": "Phi model",
 
 
 	"repositories": [
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-database"},
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-core"},
-		{"type": "vcs", "url": "https://github.com/elbiniou/phi-traits"}
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-database"},
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-core"},
+		{"type": "vcs", "url": "https://github.com/deljlx/phi-traits"}
 	],
 	"require":
 	{
-		"elbiniou/phi-core": "0.1.0",
-		"elbiniou/phi-database": "0.1.0",
-		"elbiniou/phi-traits": "0.1.0"
+		"deljlx/phi-core": "0.1.0",
+		"deljlx/phi-database": "0.1.0",
+		"deljlx/phi-traits": "0.1.0"
 	},
 
 
